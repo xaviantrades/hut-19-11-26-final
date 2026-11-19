@@ -42,10 +42,10 @@ import {
 // ==========================================================
 
 // Change this to the page you want users to enter after login.
-const LANDING_PAGE = "landing.html";
+const LANDING_PAGE = "/dashboard";
 
 // Change this to your login/signup page if needed.
-const LOGIN_PAGE = "index.html";
+const LOGIN_PAGE = "/";
 
 
 // ==========================================================

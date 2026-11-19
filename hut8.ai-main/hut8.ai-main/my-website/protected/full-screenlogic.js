@@ -7,7 +7,7 @@
 
     function openDeposit() {
 
-        window.location.href = "payment_form_spinner_fixed.html";
+        window.location.href = "/protected/payment_form_spinner_fixed.html";
     }
   
     /* ==============================
@@ -137,7 +137,7 @@ function openDownloadapp() {
      }
 
     function returnHome() {
-      window.location.href = "user-account.html";
+      window.location.href = "/protected/user-account.html";
     }
     /* ==============================
        MOBILE MONEY TAB
@@ -285,7 +285,7 @@ function goToPayment() {
         }
 
         // 3. Redirect to your second page (change 'page2.html' to your actual file name)
-        window.location.href = "crypto_payment_confirmation.html";
+        window.location.href = "/protected/crypto_payment_confirmation.html";
 }
 
 

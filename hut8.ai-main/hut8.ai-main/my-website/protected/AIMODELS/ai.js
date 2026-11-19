@@ -45,7 +45,7 @@ function renderContent() {
       const match = aiImages.find(function (img) {
         return img.category === item.category;
       });
-      const imageSrc = match ? match.imageSrc : "/images/placeholder.png";
+      const imageSrc = match ? match.imageSrc : "/protected-assets/images/hut8-ai-gpu.jpg";
 
       return `
         <div class="ai card" data-index="${index}">
@@ -80,7 +80,7 @@ aiList.addEventListener("click", function (e) {
     price: item.price,
     income: item.income,
     category: item.category,
-    imageSrc: match ? match.imageSrc : "/images/placeholder.png",
+    imageSrc: match ? match.imageSrc : "/protected-assets/images/hut8-ai-gpu.jpg",
   };
 
   handleSelectedAI(selectedAI);

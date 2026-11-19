@@ -58,12 +58,12 @@ function handlePaymentSubmit(event) {
         // Wait 2 seconds, stop spinner/modal, then redirect
         setTimeout(() => {
             modal.classList.remove("payment-modal-open");
-            window.location.href = "chats.html";
+            window.location.href = "/protected/chats.html";
         }, 20000);
     } else {
         // If modal doesn't exist, still redirect
         setTimeout(() => {
-            window.location.href = "chats.html";
+            window.location.href = "/protected/chats.html";
         }, 8000);
     }
 }
