@@ -779,3 +779,25 @@ console.log("utilities.js is working");
 
 
 
+
+
+let currentUser = null;
+
+async function initializeUserLogic() {
+    const response = await fetch("/api/user-reference", {
+        credentials: "include"
+    });
+
+    if (!response.ok) {
+        throw new Error("Unable to identify logged-in user");
+    }
+
+    currentUser = await response.json();
+
+    console.log("User ID:", currentUser.userId);
+    console.log("Firestore reference:", currentUser.firestorePath);
+
+    // Put your user-specific logic here
+}
+
+initializeUserLogic();
