@@ -593,7 +593,7 @@ function depositcontainer(){
                             type="tel"
                             class="input-field"
                             id="phoneNumber"
-                            placeholder="0XXXXXXXXX MTN or Airtel number" />
+                            placeholder="077XXXXXXX MTN or Airtel number" />
                     </div>
 
                     <div class="form-group">
