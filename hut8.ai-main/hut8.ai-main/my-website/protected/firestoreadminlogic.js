@@ -1,22 +1,9 @@
-// ==========================================
-// FIREBASE IMPORTS
-// ==========================================
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-
 import {
-    getFirestore,
-    doc,
-    setDoc,
-    increment,
-    serverTimestamp,
-    onSnapshot
+  getFirestore,
+  doc,
+  onSnapshot
 } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
-
-
-// ==========================================
-// FIREBASE CONFIG
-// ==========================================
 
 const firebaseConfig = {
     apiKey: "AIzaSyCywqYls2mJfY9maHRhsHRTP6OmPgC1Kf0",
@@ -29,15 +16,86 @@ const firebaseConfig = {
 };
 
 
-// ==========================================
-// INITIALIZE FIREBASE
-// ==========================================
-
 const app = initializeApp(firebaseConfig);
-
 const db = getFirestore(app);
 
+const formatUGX = (value) =>
+  `UGX ${Number(value || 0).toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })}`;
 
+let currentUser = null;
+let unsubscribeAmount = null;
+
+function listenToUserAmount(db, userId, onAmount) {
+  if (!userId) {
+    console.error("listenToUserAmount: missing userId");
+    return () => {};
+  }
+
+  const userRef = doc(db, "users", userId);
+
+  return onSnapshot(
+    userRef,
+    (docSnap) => {
+      const amount = docSnap.exists() ? (docSnap.data().amount ?? 0) : 0;
+      const formatted = formatUGX(amount);
+      console.log(formatted);
+      onAmount?.(formatted, amount);
+    },
+    (error) => {
+      console.error("Error listening to user amount:", error);
+      onAmount?.("Unable to load balance", null);
+    }
+  );
+}
+
+async function initializeUserLogic() {
+  const response = await fetch("/api/user-reference", {
+    credentials: "include"
+  });
+
+  if (!response.ok) {
+    throw new Error(`Unable to identify logged-in user (${response.status})`);
+  }
+
+  currentUser = await response.json();
+  console.log("User ID:", currentUser.userId);
+  console.log("Firestore reference:", currentUser.firestorePath);
+
+  const userId = currentUser.userId;
+  if (!userId) throw new Error("No userId returned from /api/user-reference");
+
+  // Detach any previous listener before starting a new one
+  if (typeof unsubscribeAmount === "function") unsubscribeAmount();
+
+  unsubscribeAmount = listenToUserAmount(db, userId, (formatted, raw) => {
+    // Wire this up to whatever element actually exists, e.g.:
+    // document.getElementById("balance").textContent = formatted;
+    console.log("Balance updated:", formatted, raw);
+  });
+}
+
+initializeUserLogic().catch((err) => {
+  console.error("User init failed:", err);
+});
+
+// Optional: clean up when the page unloads / SPA route changes
+window.addEventListener("pagehide", () => {
+  if (typeof unsubscribeAmount === "function") unsubscribeAmount();
+  unsubscribeAmount = null;
+});
+
+
+
+
+
+
+
+
+
+/*
 // ==========================================
 // GET CURRENT LOGGED-IN USER
 // ==========================================
@@ -455,7 +513,7 @@ function displayTotalDeposited() {
 
 
 displayTotalDeposited();
-
+*/
 
 console.log(
                     "ADMIN LOGI JS IS RUNNING:"
