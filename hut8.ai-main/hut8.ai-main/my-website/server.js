@@ -291,3 +291,10 @@ app.post("/api/logout", (req, res) => {
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server listening on port ${PORT}`);
 });
+
+app.get("/api/user-reference", requireLogin, (req, res) => {
+    res.json({
+        userId: req.session.userId,
+        firestorePath: `users/${req.session.userId}`
+    });
+});
