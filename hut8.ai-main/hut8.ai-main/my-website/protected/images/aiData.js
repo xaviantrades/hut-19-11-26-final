@@ -465,50 +465,50 @@ export const Data = [
 export const aiImages = [
   {
     category: "Blackwell Ultra",
-    imageSrc: "/hut8.ai-main/images/a_Ultra-realistic_stud.webp"
+    imageSrc: "/protected-assets/images/a_Ultra-realistic_stud.webp"
   },
      {
     category: "H100/H200 (Hopper)",
-    imageSrc: "/hut8.ai-main/images/ChatGPT Image Nov 4, 2026, 10_37_08 PM.png"
+    imageSrc: "/protected-assets/images/ChatGPT Image Nov 4, 2026, 10_37_08 PM.png"
   },
      {
     category: "Feynman",
-    imageSrc: "/hut8.ai-main/images/deepseek-v3-2-speciale.jpg"
+    imageSrc: "/protected-assets/images/deepseek-v3-2-speciale.jpg"
   },
      {
     category: "Trillium (v6),",
-    imageSrc: "/hut8.ai-main/images/Gemini_Generated_Image_nggcponggcponggc.jpg"
+    imageSrc: "/protected-assets/images/Gemini_Generated_Image_nggcponggcponggc.jpg"
   },
      {
     category: "Ironwood (v7)",
-    imageSrc: "/hut8.ai-main/images/deepseek-v4-pro.jpg"
+    imageSrc: "/protected-assets/images/deepseek-v4-pro.jpg"
   },
      {
     category: "RTX PRO Servers",
-    imageSrc: "/hut8.ai-main/images/Gemini_Generated_Image_uvprmuvprmuvprmu.jpg"
+    imageSrc: "/protected-assets/images/Gemini_Generated_Image_uvprmuvprmuvprmu.jpg"
   },
      {
     category: "DGX Spark PRO",
-    imageSrc: "/hut8.ai-main/images/hardware-edge-ai-device.jpg"
+    imageSrc: "/protected-assets/images/hardware-edge-ai-device.jpg"
   },
      {
     category: "Blackwell Server Edition",
-    imageSrc: "/hut8.ai-main/images/hardware-gpu-accelerator.jpg"
+    imageSrc: "/protected-assets/images/hardware-gpu-accelerator.jpg"
   },
      {
     category: "Groq LPU",
-    imageSrc: "/hut8.ai-main/images/HUT 8 GPU Server Concept Render.png"
+    imageSrc: "/protected-assets/images/HUT 8 GPU Server Concept Render.png"
   },
      {
     category: "Quantum Ultra",
-    imageSrc: "/hut8.ai-main/images/Hut 8 GPU Server in Cool Data Center.png"
+    imageSrc: "/protected-assets/images/Hut 8 GPU Server in Cool Data Center.png"
   },
      {
     category: "Etched Sohu",
-    imageSrc: "/hut8.ai-main/images/hut8_gpu_01_studio_product.png"
+    imageSrc: "/protected-assets/images/hut8_gpu_01_studio_product.png"
   },
      {
     category: "Tenstorrent",
-    imageSrc: "/hut8.ai-main/images/hut8-ai-gpu.jpg"
+    imageSrc: "/protected-assets/images/hut8-ai-gpu.jpg"
   }  
 ];
