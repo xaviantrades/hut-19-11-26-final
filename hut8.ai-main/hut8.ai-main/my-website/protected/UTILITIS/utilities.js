@@ -191,7 +191,7 @@ function withdwalcontainer(){
             color: #e0e0e0;
         }
 
-        /* Submit Button */
+        /*  Button */
         .submit-btn {
             width: 100%;
             height: 48px;
@@ -751,6 +751,32 @@ function initPaymentUI() {
         if (typeof closeWindow === 'function') closeWindow();
     });
 }
+
+//DEPOSIT LOGIC
+function deposit_logic(){
+
+let currentUser = null;
+
+  const response = await fetch("/api/user-reference", {
+        credentials: "include"
+    });
+
+    if (!response.ok) {
+        throw new Error("Unable to identify logged-in user");
+    }
+
+    currentUser = await response.json();
+
+    console.log("User ID:", currentUser.userId);
+    console.log("Firestore reference:", currentUser.firestorePath);
+
+
+  
+  
+}
+
+
+
 
 function openPage(populate) {
     [banner, card_con, menu_container, reward_card, nav].forEach(el => el.style.display = 'none');
