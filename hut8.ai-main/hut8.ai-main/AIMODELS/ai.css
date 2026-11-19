@@ -1,0 +1,244 @@
+header{
+    width: 100%;
+    height: 30px;
+    display: flex;
+    gap: 10px;
+  
+    
+}
+
+#aicat {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  width: 100%;
+  max-width: 100vw;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+
+  /* 1. Hide scrollbar */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+
+  /* 2. Indicate more content with a fade-out mask on the right edge */
+  padding-right: 32px; /* Ensures the last tab isn't permanently faded */
+  -webkit-mask-image: linear-gradient(to right, black 90%, transparent 100%);
+  mask-image: linear-gradient(to right, black 90%, transparent 100%);
+
+  /* 3. Drag UX */
+  cursor: grab;
+  user-select: none;
+}
+
+#aicat::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+#aicat.dragging {
+  cursor: grabbing;
+}
+
+#aicat > * {
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+/* Horizontal Top Filter Bar */
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e0e0e0;
+  overflow-x: auto; /* Allows horizontal scrolling on small screens */
+}
+
+/* Tab Buttons */
+.filter-tab {
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #555;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.filter-tab:hover {
+  background: #f0f0f0;
+}
+
+/* Active Tab State */
+.filter-tab.active {
+  background: #111;
+  color: #fff;
+}
+/* AI CARDS*/
+/* Vertical Column Container */
+#List {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px 0;
+}
+
+/* Horizontal Card Layout (Thumbnail Left, Text Right) */
+.ai.card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 14px;
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+ background-color: black;
+  width: 100%;
+}
+
+/* Thumbnail Box on the Left */
+.img.card {
+  flex-shrink: 0; /* Prevents thumbnail from getting squished by text */
+  width: 120px;
+  height: 72px;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+/* If you put an <img> tag inside .img.card */
+.img.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  z-index: 10000;
+}
+
+/* Text Details on the Right */
+.desc {
+  display: flex;
+  flex-direction:column;
+  gap: 4px;
+  min-width: 0; /* Allows text truncation if title is very long */
+  flex: 1;
+}
+
+.ai.title {
+  font-size: 16px;
+  font-weight: 800;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ai.lock,
+.ai.price,
+.ai.income {
+  font-size: 13px;
+  color: whitesmoke;
+}
+
+.ai.income{
+  font-weight: 800;
+}
+
+
+ .mycard {
+       border-top:1px solid #161616;
+      
+     
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      color: #e2e8f0;
+   width:100%;max-width:480px;
+    }
+    .mycard img {
+      width: 100%;
+      height: 147px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .content {
+      padding: 25px;
+      
+    }
+    .mybadge {
+  display: inline-block;
+  background: #0349a5;
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px 10px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  cursor: pointer;
+  border: 2px solid #fde68a;
+  animation: badgePulse 1.5s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+  0% {
+    transform: scale(0);
+    box-shadow: 0 0 0 0 #138cff, 0 0 6px #138cff;
+  }
+  50% {
+    transform: scale(1.08);
+    box-shadow: 0 0 0 10px #0349a5, 0 0 18px #fbbf24;
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0), 0 0 6px #fbbf24;
+  }
+}
+    h2 {
+      margin: 0 0 10px;
+      font-size: 22px;
+      color: #f8fafc;
+    }
+    p {
+      margin: 0 0 16px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .stats {
+      display: flex;
+      justify-content: space-between;
+      background: #0f172a;
+      border-radius: 10px;
+      padding: 12px;
+      margin-bottom: 16px;
+    }
+    .stat {
+      text-align: center;
+    }
+    .stat span {
+      display: block;
+      font-size: 12px;
+      color: #94a3b8;
+    }
+    .stat strong {
+      font-size: 15px;
+      color: #38bdf8;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #22c55e, #16a34a);
+      color: #fff;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .btn:hover {
+      opacity: 0.9;
+    }
+  
