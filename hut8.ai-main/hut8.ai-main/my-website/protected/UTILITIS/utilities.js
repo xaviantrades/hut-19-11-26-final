@@ -803,20 +803,25 @@ const phoneNumber = document.getElementById("phoneNumber")?.value.trim();
   return data;
 }
 
-depositBtn?.addEventListener("click", async () => {
-  depositBtn.disabled = true; // prevent double clicks
-  try {
-    const result = await depositLogic();
-    console.log("Deposit success:", result);
-    alert(result.message);
-  } catch (err) {
-    console.error(err);
-    alert(err.message);
-  } finally {
-    depositBtn.disabled = false;
-  }
-});
+function initDeposit() {
+  const btn = document.getElementById("deposit-btn");
+  btn?.addEventListener("click", async () => {
+    const usdtActive = document.getElementById("usdtSection")
+      ?.classList.contains("active");
+    if (usdtActive) return alert("USDT deposit not connected yet");
 
+    btn.disabled = true;
+    try {
+      const result = await depositLogic();
+      alert(result.message);
+    } catch (err) {
+      console.error(err);
+      alert(err.message);
+    } finally {
+      btn.disabled = false;
+    }
+  });
+}
 
 
 
