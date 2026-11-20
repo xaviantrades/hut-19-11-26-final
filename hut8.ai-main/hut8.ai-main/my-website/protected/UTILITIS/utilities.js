@@ -752,6 +752,12 @@ function initPaymentUI() {
     });
 }
 
+document.getElementById('deposit-btn')?.addEventListener('click', () => {
+        
+        const depositAmount = document.getElementById("");
+const phoneNumber = document.getElementById("");
+const userDet = null;
+
 //DEPOSIT LOGIC
 function deposit_logic(){
 
@@ -775,6 +781,8 @@ let currentUser = null;
   
 }
 
+    });
+}
 
 
 
@@ -806,7 +814,7 @@ console.log("utilities.js is working");
 
 
 
-
+/*
 let currentUser = null;
 
 async function initializeUserLogic() {
@@ -827,3 +835,4 @@ async function initializeUserLogic() {
 }
 
 initializeUserLogic();
+*/
