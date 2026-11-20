@@ -752,37 +752,78 @@ function initPaymentUI() {
     });
 }
 
-document.getElementById('deposit-btn')?.addEventListener('click', () => {
-        
-        const depositAmount = document.getElementById("");
-const phoneNumber = document.getElementById("");
-const userDet = null;
-
-//DEPOSIT LOGIC
-function deposit_logic(){
-
-let currentUser = null;
-
-  const response = await fetch("/api/user-reference", {
-        credentials: "include"
-    });
-
-    if (!response.ok) {
-        throw new Error("Unable to identify logged-in user");
-    }
-
-    currentUser = await response.json();
-
-    console.log("User ID:", currentUser.userId);
-    console.log("Firestore reference:", currentUser.firestorePath);
 
 
-  
-  
+
+
+// Replace with your deployed Worker URL
+const WORKER_URL = "https://your-worker.your-subdomain.workers.dev/deposit";
+
+const depositBtn = document.getElementById("deposit-btn");
+const amountInput = document.getElementById("deposit-amount"); // match your HTML ids
+const phoneInput = document.getElementById("phone-number");
+
+// Fetch the logged-in user's reference from your backend
+async function getCurrentUser() {
+  const res = await fetch("/api/user-reference", { credentials: "include" });
+  if (!res.ok) throw new Error("Unable to identify logged-in user");
+  return res.json(); // { userId, firestorePath }
 }
 
-    });
+// Send the deposit request to the Cloudflare Worker
+async function depositLogic() {
+  const amount = parseFloat(amountInput?.value);
+  const phoneNumber = phoneInput?.value.trim();
+
+  // Validate inputs
+  if (!phoneNumber || !/^\+?\d{9,15}$/.test(phoneNumber)) {
+    throw new Error("Enter a valid phone number");
+  }
+  if (!Number.isFinite(amount) || amount <= 0) {
+    throw new Error("Enter a valid deposit amount");
+  }
+
+  // Get user from source
+  const currentUser = await getCurrentUser();
+  if (!currentUser?.userId) throw new Error("User ID missing");
+
+  // All three values are present – send to the Worker
+  const res = await fetch(WORKER_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      userId: currentUser.userId,
+      firestorePath: currentUser.firestorePath,
+      phoneNumber,
+      amount,
+    }),
+  });
+
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok || !data.success) {
+    throw new Error(data.message || "Deposit failed");
+  }
+  return data;
 }
+
+depositBtn?.addEventListener("click", async () => {
+  depositBtn.disabled = true; // prevent double clicks
+  try {
+    const result = await depositLogic();
+    console.log("Deposit success:", result);
+    alert(result.message);
+  } catch (err) {
+    console.error(err);
+    alert(err.message);
+  } finally {
+    depositBtn.disabled = false;
+  }
+});
+
+
+
+
+
 
 
 
