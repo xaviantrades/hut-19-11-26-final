@@ -670,7 +670,6 @@ function depositcontainer(){
             <!-- SUBMIT BUTTON -->
             <button class="submit-btn" id="deposit-btn">Deposit</button>
         </div>
-         </div> 
     
 `
 }
@@ -690,7 +689,7 @@ function closeWindow(){
 
 
 
-const amountInput = document.getElementById('amountInput');
+
 function initPaymentUI() {
     const tabs = document.querySelectorAll('.payment-tab');
     const sections = document.querySelectorAll('.tab-section');
@@ -704,7 +703,7 @@ function initPaymentUI() {
         });
     });
 
-    
+    const amountInput = document.getElementById('amountInput');
     const amountDisplay = document.getElementById('amountDisplay');
     const presetBtns = document.querySelectorAll('.preset-btn');
 
@@ -753,94 +752,38 @@ function initPaymentUI() {
     });
 }
 
+//DEPOSIT LOGIC
+function deposit_logic(){
 
+let currentUser = null;
 
+  const response = await fetch("/api/user-reference", {
+        credentials: "include"
+    });
 
-
-// Replace with your deployed Worker URL
-const WORKER_URL = "https://frosty-sun-7f4b.geraldsaviour623.workers.dev/deposit";
-
-
-// Fetch the logged-in user's reference from your backend
-async function getCurrentUser() {
-  const res = await fetch("/api/user-reference", { credentials: "include" });
-  if (!res.ok) throw new Error("Unable to identify logged-in user");
-  return res.json(); // { userId, firestorePath }
-}
-
-// Send the deposit request to the Cloudflare Worker
-async function depositLogic() {
-  const amount = parseFloat(document.getElementById("amountInput")?.value);
-const phoneNumber = document.getElementById("phoneNumber")?.value.trim();
-
-  // Validate inputs
-  if (!phoneNumber || !/^\+?\d{9,15}$/.test(phoneNumber)) {
-    throw new Error("Enter a valid phone number");
-  }
-  if (!Number.isFinite(amount) || amount <= 0) {
-    throw new Error("Enter a valid deposit amount");
-  }
-
-  // Get user from source
-  const currentUser = await getCurrentUser();
-  if (!currentUser?.userId) throw new Error("User ID missing");
-
-  // All three values are present – send to the Worker
-  const res = await fetch(WORKER_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      userId: currentUser.userId,
-      firestorePath: currentUser.firestorePath,
-      phoneNumber,
-      amount,
-    }),
-  });
-
-  const data = await res.json().catch(() => ({}));
-  if (!res.ok || !data.success) {
-    throw new Error(data.message || "Deposit failed");
-  }
-  return data;
-}
-
-function initDeposit() {
-  const btn = document.getElementById("deposit-btn");
-  btn?.addEventListener("click", async () => {
-    const usdtActive = document.getElementById("usdtSection")
-      ?.classList.contains("active");
-    if (usdtActive) return alert("USDT deposit not connected yet");
-
-    btn.disabled = true;
-    try {
-      const result = await depositLogic();
-      alert(result.message);
-    } catch (err) {
-      console.error(err);
-      alert(err.message);
-    } finally {
-      btn.disabled = false;
+    if (!response.ok) {
+        throw new Error("Unable to identify logged-in user");
     }
-  });
+
+    currentUser = await response.json();
+
+    console.log("User ID:", currentUser.userId);
+    console.log("Firestore reference:", currentUser.firestorePath);
+
+
+  
+  
 }
 
 
 
 
-
-
-
-function openPage(populate, init) {
-  [banner, card_con, menu_container, reward_card, nav]
-    .forEach(el => el.style.display = 'none');
-  others();
-  populate();
-  initPaymentUI();
-  init?.();
+function openPage(populate) {
+    [banner, card_con, menu_container, reward_card, nav].forEach(el => el.style.display = 'none');
+    others();
+    populate();
+    initPaymentUI();
 }
-
-deposit_container.addEventListener('click', () => openPage(depositcontainer, initDeposit));
-withdral_container.addEventListener('click', () => openPage(withdwalcontainer));
 
 deposit_container.addEventListener('click', () => openPage(depositcontainer));
 withdral_container.addEventListener('click', () => openPage(withdwalcontainer));
@@ -863,7 +806,7 @@ console.log("utilities.js is working");
 
 
 
-/*
+
 let currentUser = null;
 
 async function initializeUserLogic() {
@@ -884,4 +827,3 @@ async function initializeUserLogic() {
 }
 
 initializeUserLogic();
-*/
