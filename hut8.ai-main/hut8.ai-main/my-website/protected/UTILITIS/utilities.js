@@ -761,7 +761,7 @@ const WORKER_URL = "https://your-worker.your-subdomain.workers.dev/deposit";
 
 const depositBtn = document.getElementById("deposit-btn");
 // match your HTML ids
-const phoneInput = document.getElementById("phone-number");
+const phoneInput = document.getElementById("phoneNumber");
 
 // Fetch the logged-in user's reference from your backend
 async function getCurrentUser() {
