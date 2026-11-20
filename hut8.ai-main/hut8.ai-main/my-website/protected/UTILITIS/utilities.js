@@ -1,15 +1,15 @@
-const container = document.getElementById('transactionHTML'); 
-const banner = document.querySelector('.banner');
-const card_con = document.querySelector('.card-con');
-const menu_container = document.querySelector('.menu-container');
-const crypto_port = document.querySelectorAll('.crypto-port');
-const reward_card = document.querySelector('.reward-card');
-const nav = document.querySelector('.nav');
+const container = document.getElementById("transactionHTML");
+const banner = document.querySelector(".banner");
+const card_con = document.querySelector(".card-con");
+const menu_container = document.querySelector(".menu-container");
+const crypto_port = document.querySelectorAll(".crypto-port");
+const reward_card = document.querySelector(".reward-card");
+const nav = document.querySelector(".nav");
 
 const withdral_container = document.getElementById("withdral_container");
 const deposit_container = document.getElementById("deposit_container");
 
-function withdwalcontainer(){
+function withdwalcontainer() {
     container.innerHTML = `
     <style>
 - {
@@ -191,7 +191,7 @@ function withdwalcontainer(){
             color: #e0e0e0;
         }
 
-        /*  Button */
+        /* Submit Button */
         .submit-btn {
             width: 100%;
             height: 48px;
@@ -295,9 +295,10 @@ function withdwalcontainer(){
             <!-- SUBMIT BUTTON -->
             <button class="submit-btn" id="withdrawl-btn">Withdraw</button>
         </div>
-    </div>`
+    </div>`;
 }
-function depositcontainer(){
+
+function depositcontainer() {
     container.innerHTML = `
     <style>
         * {
@@ -593,7 +594,7 @@ function depositcontainer(){
                             type="tel"
                             class="input-field"
                             id="phoneNumber"
-                            placeholder="077XXXXXXX MTN or Airtel number" />
+                            placeholder="0XXXXXXXXX MTN or Airtel number" />
                     </div>
 
                     <div class="form-group">
@@ -671,159 +672,144 @@ function depositcontainer(){
             <button class="submit-btn" id="deposit-btn">Deposit</button>
         </div>
     
-`
+`;
 }
 
-function others(){
- crypto_port.forEach(card => {
-    card.style.display = 'none';
-});   
+function others() {
+    crypto_port.forEach((card) => {
+        card.style.display = "none";
+    });
 }
 
-
-function closeWindow(){
-      [banner, card_con, menu_container, reward_card, nav].forEach(el => el.style.display = '');
-  window.location.href = window.location.href;
-    
+function closeWindow() {
+    [banner, card_con, menu_container, reward_card, nav].forEach((el) => (el.style.display = ""));
+    window.location.href = window.location.href;
 }
-
-
-
 
 function initPaymentUI() {
-    const tabs = document.querySelectorAll('.payment-tab');
-    const sections = document.querySelectorAll('.tab-section');
+    const tabs = document.querySelectorAll(".payment-tab");
+    const sections = document.querySelectorAll(".tab-section");
 
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            tabs.forEach(t => t.classList.remove('active'));
-            sections.forEach(s => s.classList.remove('active'));
-            tab.classList.add('active');
-            document.getElementById(tab.dataset.target)?.classList.add('active');
+    tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+            tabs.forEach((t) => t.classList.remove("active"));
+            sections.forEach((s) => s.classList.remove("active"));
+            tab.classList.add("active");
+            document.getElementById(tab.dataset.target)?.classList.add("active");
         });
     });
 
-    const amountInput = document.getElementById('amountInput');
-    const amountDisplay = document.getElementById('amountDisplay');
-    const presetBtns = document.querySelectorAll('.preset-btn');
+    const amountInput = document.getElementById("amountInput");
+    const amountDisplay = document.getElementById("amountDisplay");
+    const presetBtns = document.querySelectorAll(".preset-btn");
 
     function updateAmountDisplay(value) {
         if (!amountDisplay) return;
         const val = parseFloat(value);
-        amountDisplay.textContent = Number.isNaN(val) || val < 0
-            ? '0.00'
-            : val.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        amountDisplay.textContent =
+            Number.isNaN(val) || val < 0
+                ? "0.00"
+                : val.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     }
 
-    amountInput?.addEventListener('input', () => {
-        presetBtns.forEach(b => b.classList.remove('selected'));
+    amountInput?.addEventListener("input", () => {
+        presetBtns.forEach((b) => b.classList.remove("selected"));
         updateAmountDisplay(amountInput.value);
     });
 
-    presetBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            presetBtns.forEach(b => b.classList.remove('selected'));
-            btn.classList.add('selected');
-            const v = btn.dataset.amount ?? '';
+    presetBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            presetBtns.forEach((b) => b.classList.remove("selected"));
+            btn.classList.add("selected");
+            const v = btn.dataset.amount ?? "";
             if (amountInput) amountInput.value = v;
             updateAmountDisplay(v);
         });
     });
 
-    const copyWalletBtn = document.getElementById('copyWalletBtn');
-    const platformWallet = document.getElementById('platformWallet');
+    const copyWalletBtn = document.getElementById("copyWalletBtn");
+    const platformWallet = document.getElementById("platformWallet");
 
-    copyWalletBtn?.addEventListener('click', async () => {
+    copyWalletBtn?.addEventListener("click", async () => {
         const text = platformWallet?.textContent.trim();
         if (!text) return;
         try {
             await navigator.clipboard.writeText(text);
             const original = copyWalletBtn.textContent;
-            copyWalletBtn.textContent = 'Copied!';
-            setTimeout(() => copyWalletBtn.textContent = original, 2000);
+            copyWalletBtn.textContent = "Copied!";
+            setTimeout(() => (copyWalletBtn.textContent = original), 2000);
         } catch (err) {
-            console.error('Failed to copy wallet address:', err);
+            console.error("Failed to copy wallet address:", err);
         }
     });
 
-    document.getElementById('closeBtn')?.addEventListener('click', () => {
-        
-        if (typeof closeWindow === 'function') closeWindow();
-    });
-}
-
-//DEPOSIT LOGIC
-function deposit_logic(){
-
-let currentUser = null;
-
-  const response = await fetch("/api/user-reference", {
-        credentials: "include"
+    document.getElementById("closeBtn")?.addEventListener("click", () => {
+        if (typeof closeWindow === "function") closeWindow();
     });
 
-    if (!response.ok) {
-        throw new Error("Unable to identify logged-in user");
-    }
+    // DEPOSIT LOGIC STARTS HERE
+    ///..................................................
+    //...................................
+    document.getElementById("deposit-btn").addEventListener("click", function () {
+        const WORKER_URL = "https://frosty-sun-7f4b.geraldsaviour623.workers.dev/deposit";
 
-    currentUser = await response.json();
+        // Send the deposit request to the Cloudflare Worker
+        async function depositLogic() {
+           const phoneNumber= document.getElementById("phoneNumber").value.trim();
+            const amount = parseFloat(amountInput?.value);
+          
 
-    console.log("User ID:", currentUser.userId);
-    console.log("Firestore reference:", currentUser.firestorePath);
+            // Validate inputs
+            if (!phoneNumber || !/^\+?\d{9,15}$/.test(phoneNumber)) {
+                throw new Error("Enter a valid phone number");
+            }
+            if (!Number.isFinite(amount) || amount <= 0) {
+                throw new Error("Enter a valid deposit amount");
+            }
 
+            
 
-  
-  
+            // All three values are present – send to the Worker
+            const res = await fetch(WORKER_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    
+                    phoneNumber,
+                    amount
+                })
+            });
+
+            const data = await res.json().catch(() => ({}));
+            if (!res.ok || !data.success) {
+                throw new Error(data.message || "Deposit failed");
+            }
+            return data;
+        }
+            depositLogic();
+            
+        console.log(amountInput.value);
+
+        console.log("saviour working");
+    });
 }
-
-
-
 
 function openPage(populate) {
-    [banner, card_con, menu_container, reward_card, nav].forEach(el => el.style.display = 'none');
+    [banner, card_con, menu_container, reward_card, nav].forEach((el) => (el.style.display = "none"));
     others();
     populate();
     initPaymentUI();
 }
 
-deposit_container.addEventListener('click', () => openPage(depositcontainer));
-withdral_container.addEventListener('click', () => openPage(withdwalcontainer));
-function displyaLogic(){
-    
-}
-
-
+deposit_container.addEventListener("click", () => openPage(depositcontainer));
+withdral_container.addEventListener("click", () => openPage(withdwalcontainer));
+function displyaLogic() {}
 
 //depositcontainer();
 //depositcontainer();
 //withdwalcontainer();
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
     // Tab Switching Logic
-   
 });
 console.log("utilities.js is working");
-
-
-
-
-
-let currentUser = null;
-
-async function initializeUserLogic() {
-    const response = await fetch("/api/user-reference", {
-        credentials: "include"
-    });
-
-    if (!response.ok) {
-        throw new Error("Unable to identify logged-in user");
-    }
-
-    currentUser = await response.json();
-
-    console.log("User ID From utilities.js:", currentUser.userId);
-    console.log("Firestore reference from utilities.js:", currentUser.firestorePath);
-
-    // Put your user-specific logic here
-}
-
-initializeUserLogic();
