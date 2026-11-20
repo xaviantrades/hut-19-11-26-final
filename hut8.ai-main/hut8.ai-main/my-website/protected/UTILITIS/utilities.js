@@ -757,11 +757,8 @@ function initPaymentUI() {
 
 
 // Replace with your deployed Worker URL
-const WORKER_URL = "https://frosty-sun-7f4b.geraldsaviour623.workers.dev";
+const WORKER_URL = "https://frosty-sun-7f4b.geraldsaviour623.workers.dev/deposit";
 
-const depositBtn = document.getElementById("deposit-btn");
-// match your HTML ids
-const phoneInput = document.getElementById("phoneNumber");
 
 // Fetch the logged-in user's reference from your backend
 async function getCurrentUser() {
@@ -772,8 +769,8 @@ async function getCurrentUser() {
 
 // Send the deposit request to the Cloudflare Worker
 async function depositLogic() {
-  const amount = parseFloat(amountInput?.value);
-  const phoneNumber = phoneInput?.value.trim();
+  const amount = parseFloat(document.getElementById("amountInput")?.value);
+const phoneNumber = document.getElementById("phoneNumber")?.value.trim();
 
   // Validate inputs
   if (!phoneNumber || !/^\+?\d{9,15}$/.test(phoneNumber)) {
