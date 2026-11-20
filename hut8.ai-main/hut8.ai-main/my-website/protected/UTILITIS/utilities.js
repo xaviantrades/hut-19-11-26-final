@@ -820,8 +820,8 @@ async function initializeUserLogic() {
 
     currentUser = await response.json();
 
-    console.log("User ID:", currentUser.userId);
-    console.log("Firestore reference:", currentUser.firestorePath);
+    console.log("User ID From utilities.js:", currentUser.userId);
+    console.log("Firestore reference from utilities.js:", currentUser.firestorePath);
 
     // Put your user-specific logic here
 }
