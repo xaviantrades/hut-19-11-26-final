@@ -670,6 +670,7 @@ function depositcontainer(){
             <!-- SUBMIT BUTTON -->
             <button class="submit-btn" id="deposit-btn">Deposit</button>
         </div>
+         </div> 
     
 `
 }
@@ -829,12 +830,17 @@ function initDeposit() {
 
 
 
-function openPage(populate) {
-    [banner, card_con, menu_container, reward_card, nav].forEach(el => el.style.display = 'none');
-    others();
-    populate();
-    initPaymentUI();
+function openPage(populate, init) {
+  [banner, card_con, menu_container, reward_card, nav]
+    .forEach(el => el.style.display = 'none');
+  others();
+  populate();
+  initPaymentUI();
+  init?.();
 }
+
+deposit_container.addEventListener('click', () => openPage(depositcontainer, initDeposit));
+withdral_container.addEventListener('click', () => openPage(withdwalcontainer));
 
 deposit_container.addEventListener('click', () => openPage(depositcontainer));
 withdral_container.addEventListener('click', () => openPage(withdwalcontainer));
