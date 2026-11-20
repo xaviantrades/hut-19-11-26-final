@@ -689,7 +689,7 @@ function closeWindow(){
 
 
 
-
+const amountInput = document.getElementById('amountInput');
 function initPaymentUI() {
     const tabs = document.querySelectorAll('.payment-tab');
     const sections = document.querySelectorAll('.tab-section');
@@ -703,7 +703,7 @@ function initPaymentUI() {
         });
     });
 
-    const amountInput = document.getElementById('amountInput');
+    
     const amountDisplay = document.getElementById('amountDisplay');
     const presetBtns = document.querySelectorAll('.preset-btn');
 
@@ -760,7 +760,7 @@ function initPaymentUI() {
 const WORKER_URL = "https://your-worker.your-subdomain.workers.dev/deposit";
 
 const depositBtn = document.getElementById("deposit-btn");
-const amountInput = document.getElementById("deposit-amount"); // match your HTML ids
+// match your HTML ids
 const phoneInput = document.getElementById("phone-number");
 
 // Fetch the logged-in user's reference from your backend
