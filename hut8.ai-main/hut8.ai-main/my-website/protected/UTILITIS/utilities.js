@@ -757,7 +757,7 @@ function initPaymentUI() {
 
 
 // Replace with your deployed Worker URL
-const WORKER_URL = "https://your-worker.your-subdomain.workers.dev/deposit";
+const WORKER_URL = "https://frosty-sun-7f4b.geraldsaviour623.workers.dev";
 
 const depositBtn = document.getElementById("deposit-btn");
 // match your HTML ids
