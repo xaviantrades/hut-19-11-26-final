@@ -1,0 +1,3 @@
+# Local KV store for the MarzPay Node server (one JSON file per payment).
+.kv/
+node_modules/
