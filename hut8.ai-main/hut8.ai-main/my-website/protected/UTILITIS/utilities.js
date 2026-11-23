@@ -747,51 +747,79 @@ function initPaymentUI() {
         if (typeof closeWindow === "function") closeWindow();
     });
 
+    function formatUgandanPhoneNumber(phoneNumber) {
+        if (!phoneNumber) {
+            throw new Error("Enter a valid phone number");
+        }
+
+        // Remove any whitespace (e.g., if user typed "+256 712 345 678")
+        const cleaned = phoneNumber.replace(/\s+/g, "");
+
+        // Match either +2567 followed by 8 digits, OR 07 followed by 8 digits
+        const ugandaPhoneRegex = /^(\+256|0)(7\d{8})$/;
+        const match = cleaned.match(ugandaPhoneRegex);
+
+        if (!match) {
+            throw new Error("Enter a valid phone number");
+        }
+
+        // match[2] contains "7" + the 8 remaining digits (9 digits total)
+        return `+256${match[2]}`;
+    }
+
+    const VPS_URL = "http://185.216.200.90:300";
+
+    async function request(method, path, body) {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 45000);
+        try {
+            const res = await fetch(VPS_URL + path, {
+                method,
+                headers: body ? { "Content-Type": "application/json" } : undefined,
+                body: body ? JSON.stringify(body) : undefined,
+                signal: controller.signal
+            });
+            return await res.json(); // the server always answers in JSON, even for errors
+        } catch (err) {
+            return {
+                success: false,
+                error: { message: err.name === "AbortError" ? "Request timed out." : "Could not reach the server." }
+            };
+        } finally {
+            clearTimeout(timer);
+        }
+    }
+
     // DEPOSIT LOGIC STARTS HERE
     ///..................................................
     //...................................
-    document.getElementById("deposit-btn").addEventListener("click", function () {
-        const WORKER_URL = "https://frosty-sun-7f4b.geraldsaviour623.workers.dev/deposit";
+document.getElementById("deposit-btn").addEventListener("click", async function () {
+    try {
+        // 1. If invalid, this throws immediately and skips the request below
+        const phoneNo = formatUgandanPhoneNumber(document.getElementById("phoneNumber").value.trim());
+        const amount = parseFloat(amountInput?.value);
 
-        // Send the deposit request to the Cloudflare Worker
-        async function depositLogic() {
-           const phoneNumber= document.getElementById("phoneNumber").value.trim();
-            const amount = parseFloat(amountInput?.value);
-          
+        // 2. Only runs if phoneNo is valid
+        const data = await request("POST", "/collect-money", {
+            amount: amount,
+            phone_number: phoneNo,
+            country: "UG",
+            description: "Deposit"
+        });
 
-            // Validate inputs
-            if (!phoneNumber || !/^\+?\d{9,15}$/.test(phoneNumber)) {
-                throw new Error("Enter a valid phone number");
-            }
-            if (!Number.isFinite(amount) || amount <= 0) {
-                throw new Error("Enter a valid deposit amount");
-            }
-
-            
-
-            // All three values are present – send to the Worker
-            const res = await fetch(WORKER_URL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    
-                    phoneNumber,
-                    amount
-                })
-            });
-
-            const data = await res.json().catch(() => ({}));
-            if (!res.ok || !data.success) {
-                throw new Error(data.message || "Deposit failed");
-            }
-            return data;
+        if (!data.success) {
+            alert(data.error?.message || "Deposit failed.");
+            return;
         }
-            depositLogic();
-            
-        console.log(amountInput.value);
 
-        console.log("saviour working");
-    });
+        alert("Check your phone and approve the payment.");
+        return data;
+
+    } catch (error) {
+        // Catches the invalid phone number error cleanly
+        alert(error.message);
+    }
+});
 }
 
 function openPage(populate) {
