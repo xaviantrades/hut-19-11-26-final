@@ -1,4 +1,18 @@
-import { doc, updateDoc, arrayUnion, increment, Timestamp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
+import import {
+    getFirestore,
+    collection,
+    getDocs,
+    orderBy,
+    query,
+    doc,
+    setDoc,
+    increment,
+    onSnapshot,
+    serverTimestamp,
+    updateDoc,
+    arrayUnion,
+    getDoc
+} from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
 import { Data, aiImages } from "../images/aiData.js";
 import { userId, balance, formattedBalance } from "../withdrawals.js";
@@ -122,8 +136,8 @@ async function stackAI(ai) {
             title: ai.title,
             category: ai.category,
             price,
-            lock: ai.lock,
-            createdAt: Timestamp.now()
+            lock: ai.lock
+           
         };
 
         const userRef = doc(db, "users", userId);
