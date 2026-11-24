@@ -62,6 +62,65 @@ function renderContent() {
     .join("");
 }
 
+
+
+async function stackAI(ai) {
+    try {
+        if (!userId) {
+            console.log("No logged-in user found.");
+            alert("Please log in first.");
+            return false;
+        }
+
+        if (!ai) {
+            throw new Error("Invalid AI selection.");
+        }
+
+        const price = Number(ai.price);
+        const totalIncome = Number(ai.income);
+
+        if (!Number.isFinite(price) || price <= 0) {
+            throw new Error("Invalid investment price.");
+        }
+
+        if (!Number.isFinite(totalIncome)) {
+            throw new Error("Invalid income value.");
+        }
+
+        if (Number(balance) < price) {
+            alert("Insufficient balance. Please deposit first.");
+            return false;
+        }
+
+        const investmentData = {
+            totalIncome,
+            title: ai.title,
+            category: ai.category,
+            price,
+            lock: ai.lock,
+            createdAt: Timestamp.now()
+        };
+
+        const userRef = doc(db, "users", userId);
+
+        await updateDoc(userRef, {
+            balance: increment(-price),
+            investments: arrayUnion(investmentData)
+        });
+
+        console.log("Investment saved successfully:", investmentData);
+        return true;
+    } catch (error) {
+        console.error("Error saving investment:", error);
+        alert(error.message || "Could not complete investment.");
+        return false;
+    }
+}
+
+
+
+
+
 aiList.addEventListener("click", function (e) {
   const card = e.target.closest(".ai.card");
   if (!card || !aiList.contains(card)) return;
@@ -124,6 +183,39 @@ function handleSelectedAI(selectedAI) {
     </div>
     `
   // add your logic here (open a modal, start a purchase, save to state, etc.)
+function handleSelectedAI(selectedAI) {
+  cate.style.display = "none";
+  aiList.style.display = "none";
+  headercontent.style.display = "none";
+
+  popUp.innerHTML = `
+    <div class="mycard">
+      ... your same HTML ...
+      <button class="btn">Stack Now</button>
+    </div>
+  `;
+
+  // Find the button inside popUp (not the whole document) and attach the handler
+  const stackBtn = popUp.querySelector(".btn");
+
+  stackBtn.addEventListener("click", async () => {
+    stackBtn.disabled = true;
+    stackBtn.textContent = "Processing...";
+
+    try {
+      await stackAI(selectedAI);
+      stackBtn.textContent = "Stacked ✓";
+    } catch (err) {
+      console.error(err);
+      alert(err.message);
+      stackBtn.disabled = false;
+      stackBtn.textContent = "Stack Now";
+    }
+  });
+}
+
+
+  
 }
 
 
