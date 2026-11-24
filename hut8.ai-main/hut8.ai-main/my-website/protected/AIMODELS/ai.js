@@ -184,17 +184,7 @@ function handleSelectedAI(selectedAI) {
     </div>
     `
   // add your logic here (open a modal, start a purchase, save to state, etc.)
-function handleSelectedAI(selectedAI) {
-  cate.style.display = "none";
-  aiList.style.display = "none";
-  headercontent.style.display = "none";
 
-  popUp.innerHTML = `
-    <div class="mycard">
-      ... your same HTML ...
-      <button class="btn">Stack Now</button>
-    </div>
-  `;
 
   // Find the button inside popUp (not the whole document) and attach the handler
   const stackBtn = popUp.querySelector(".btn");
@@ -214,12 +204,6 @@ function handleSelectedAI(selectedAI) {
     }
   });
 }
-
-
-  
-}
-
-
 
 
 
