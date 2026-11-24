@@ -77,8 +77,18 @@ async function stackAI(ai) {
             throw new Error("Invalid AI selection.");
         }
 
-        const price = Number(ai.price);
-        const totalIncome = Number(ai.income);
+        const cleanedPrice = String(ai.price ?? "")
+    .replace(/ugx/gi, "")
+    .replace(/,/g, "")
+    .trim();
+
+        const price = Number(cleanedPrice);
+
+      const cleanedIncome = String(ai.income ?? "")
+    .replace(/ugx/gi, "")
+    .replace(/,/g, "")
+    .trim();
+        const totalIncome = Number(cleanedIncome);
 
         if (!Number.isFinite(price) || price <= 0) {
             throw new Error("Invalid investment price.");
