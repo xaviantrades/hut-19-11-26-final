@@ -76,11 +76,6 @@ function listenToUserAmount(db, userId, onAmount) {
   );
 }
 
-
-
-
-
-
 async function getUserIdAndBalance() {
   const response = await fetch("/api/user-reference", {
     credentials: "include"
@@ -106,5 +101,5 @@ async function getUserIdAndBalance() {
     });
   });
 }
-const { userId, balance, formattedBalance } = await getUserIdAndBalance();
+export const { userId, balance, formattedBalance } = await getUserIdAndBalance();
 console.log(userId, balance, formattedBalance);
