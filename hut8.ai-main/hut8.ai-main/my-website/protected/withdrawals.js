@@ -41,6 +41,34 @@ const withdrawalsCollection = collection(db, COLLECTION_NAME);
  * GET LOGGED IN USER INFORAMTION
  * ======================================================= */
 
+function listenToUserAmount(db, userId, onAmount) {
+  if (!userId) {
+    console.error("listenToUserAmount: missing userId");
+    return () => {};
+  }
+
+  const userRef = doc(db, "users", userId);
+
+  return onSnapshot(
+    userRef,
+    (docSnap) => {
+      const amount = docSnap.exists() ? (docSnap.data().amount ?? 0) : 0;
+      const formatted = formatUGX(amount);
+      console.log(formatted);
+      onAmount?.(formatted, amount);
+    },
+    (error) => {
+      console.error("Error listening to user amount:", error);
+      onAmount?.("Unable to load balance", null);
+    }
+  );
+}
+
+
+
+
+
+
 async function getUserIdAndBalance() {
   const response = await fetch("/api/user-reference", {
     credentials: "include"
