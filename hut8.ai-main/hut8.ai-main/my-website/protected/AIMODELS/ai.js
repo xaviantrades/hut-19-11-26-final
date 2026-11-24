@@ -1,5 +1,19 @@
+import { doc, updateDoc, arrayUnion, increment, Timestamp } from "firebase/firestore";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
 import { Data, aiImages } from "../images/aiData.js";
 import { userId, balance, formattedBalance } from "../withdrawals.js";
+
+const FIREBASE_CONFIG = {
+    apiKey: "AIzaSyCywqYls2mJfY9maHRhsHRTP6OmPgC1Kf0",
+    authDomain: "x-shopping-6611d.firebaseapp.com",
+    projectId: "x-shopping-6611d",
+    storageBucket: "x-shopping-6611d.firebasestorage.app",
+    messagingSenderId: "177602183210",
+    appId: "1:177602183210:web:011c708002426b37cb8353",
+    measurementId: "G-QKLP9H1N9P"
+};
+const app = initializeApp(FIREBASE_CONFIG);
+const db = getFirestore(app);
 
 const aiList = document.getElementById("List");
 
