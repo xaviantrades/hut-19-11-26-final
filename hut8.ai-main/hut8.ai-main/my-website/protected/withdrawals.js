@@ -41,6 +41,17 @@ const withdrawalsCollection = collection(db, COLLECTION_NAME);
 /* =========================================================
  * GET LOGGED IN USER INFORAMTION
  * ======================================================= */
+const formatUGX = (value) =>
+  `UGX ${Number(value || 0).toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })}`;
+
+let currentUser = null;
+let unsubscribeAmount = null;
+
+
+
 
 function listenToUserAmount(db, userId, onAmount) {
   if (!userId) {
