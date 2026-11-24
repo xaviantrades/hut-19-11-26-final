@@ -1,4 +1,5 @@
 import { Data, aiImages } from "../images/aiData.js";
+import { userId, balance, formattedBalance } from "../withdrawals.js";
 
 const aiList = document.getElementById("List");
 
