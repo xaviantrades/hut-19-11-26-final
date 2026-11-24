@@ -1,4 +1,4 @@
-import { doc, updateDoc, arrayUnion, increment, Timestamp } from "firebase/firestore";
+import { doc, updateDoc, arrayUnion, increment, Timestamp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
 import { Data, aiImages } from "../images/aiData.js";
 import { userId, balance, formattedBalance } from "../withdrawals.js";
