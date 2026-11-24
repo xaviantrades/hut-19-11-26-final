@@ -4,7 +4,6 @@ console.log("User ID:", userId);
 console.log("Balance:", balance);
 
 
-document.getElementById("balance-display").textContent = formattedBalance;
 const container = document.getElementById("transactionHTML");
 const banner = document.querySelector(".banner");
 const card_con = document.querySelector(".card-con");
