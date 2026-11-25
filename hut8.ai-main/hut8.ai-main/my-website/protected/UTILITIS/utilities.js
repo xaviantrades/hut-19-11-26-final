@@ -773,7 +773,7 @@ function initPaymentUI() {
         return `+256${match[2]}`;
     }
 
-    const VPS_URL = "http://185.216.200.90:300";
+    const VPS_URL = "https://185.216.200.90:300";
 
     async function request(method, path, body) {
         const controller = new AbortController();
